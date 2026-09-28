@@ -1,0 +1,6 @@
+{
+  "name": "LibModular - Kiến Trúc Modular Monolith",
+  "description": "Hệ thống Quản lý Thư viện theo kiến trúc Modular Monolith so sánh với Monolith truyền thống - Đề tài môn Các vấn đề hiện đại của CNTT.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
