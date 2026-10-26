@@ -1,0 +1,234 @@
+{
+  "entities": {
+    "Book": {
+      "title": "Book",
+      "description": "Information about a book title in the library",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Unique book identifier code (e.g. BK-001)",
+          "maxLength": 64
+        },
+        "isbn": {
+          "type": "string",
+          "description": "International Standard Book Number",
+          "maxLength": 32
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the book",
+          "maxLength": 256
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the book",
+          "maxLength": 128
+        },
+        "category": {
+          "type": "string",
+          "description": "Genre or category (Công nghệ, Văn học, Kinh tế, Khoa học...)",
+          "maxLength": 64
+        },
+        "publisher": {
+          "type": "string",
+          "description": "Publisher name",
+          "maxLength": 128
+        },
+        "publishYear": {
+          "type": "number",
+          "description": "Publication year"
+        },
+        "totalCopies": {
+          "type": "number",
+          "description": "Total physical copies owned by library"
+        },
+        "availableCopies": {
+          "type": "number",
+          "description": "Currently available copies for borrowing"
+        },
+        "shelfLocation": {
+          "type": "string",
+          "description": "Shelf or bookcase location (e.g. Kệ A2-T3)",
+          "maxLength": 64
+        },
+        "description": {
+          "type": "string",
+          "description": "Summary or notes about the book",
+          "maxLength": 1000
+        },
+        "coverUrl": {
+          "type": "string",
+          "description": "Optional image URL for the book cover",
+          "maxLength": 512
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update",
+          "maxLength": 64
+        }
+      },
+      "required": ["code", "title", "author", "category", "totalCopies", "availableCopies"]
+    },
+    "Reader": {
+      "title": "Reader",
+      "description": "A registered library patron or reader",
+      "type": "object",
+      "properties": {
+        "readerCode": {
+          "type": "string",
+          "description": "Library card code (e.g. DG-1001)",
+          "maxLength": 64
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Full name of the reader",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address",
+          "maxLength": 128
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number",
+          "maxLength": 32
+        },
+        "address": {
+          "type": "string",
+          "description": "Residential or university address",
+          "maxLength": 256
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "locked"],
+          "description": "Reader account status"
+        },
+        "registeredAt": {
+          "type": "string",
+          "description": "ISO date of registration",
+          "maxLength": 64
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Update timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["readerCode", "fullName", "email", "phone", "status"]
+    },
+    "Loan": {
+      "title": "Loan",
+      "description": "A book loan slip record",
+      "type": "object",
+      "properties": {
+        "loanCode": {
+          "type": "string",
+          "description": "Unique loan slip code (e.g. PM-2026-001)",
+          "maxLength": 64
+        },
+        "readerId": {
+          "type": "string",
+          "description": "Firestore document ID of the reader",
+          "maxLength": 128
+        },
+        "readerName": {
+          "type": "string",
+          "description": "Full name of the borrower",
+          "maxLength": 128
+        },
+        "readerCode": {
+          "type": "string",
+          "description": "Reader card code",
+          "maxLength": 64
+        },
+        "bookId": {
+          "type": "string",
+          "description": "Firestore document ID of the borrowed book",
+          "maxLength": 128
+        },
+        "bookTitle": {
+          "type": "string",
+          "description": "Title of the borrowed book",
+          "maxLength": 256
+        },
+        "bookCode": {
+          "type": "string",
+          "description": "Code of the borrowed book",
+          "maxLength": 64
+        },
+        "borrowDate": {
+          "type": "string",
+          "description": "Date book was checked out (YYYY-MM-DD)",
+          "maxLength": 32
+        },
+        "dueDate": {
+          "type": "string",
+          "description": "Scheduled return deadline (YYYY-MM-DD)",
+          "maxLength": 32
+        },
+        "returnDate": {
+          "type": "string",
+          "description": "Actual return date (YYYY-MM-DD) or empty if active",
+          "maxLength": 32
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "returned", "overdue"],
+          "description": "Current status of the loan"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Condition of book or notes",
+          "maxLength": 500
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "UID of librarian who processed this",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last updated timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["loanCode", "readerId", "bookId", "borrowDate", "dueDate", "status"]
+    }
+  },
+  "firestore": {
+    "/books/{bookId}": {
+      "schema": "Book",
+      "description": "Collection of books in the library catalog"
+    },
+    "/readers/{readerId}": {
+      "schema": "Reader",
+      "description": "Registered library readers"
+    },
+    "/loans/{loanId}": {
+      "schema": "Loan",
+      "description": "Book borrowing transactions and loan slips"
+    }
+  }
+}

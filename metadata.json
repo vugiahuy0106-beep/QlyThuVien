@@ -1,0 +1,8 @@
+{
+  "name": "LibModular",
+  "description": "Hệ thống Quản lý Thư viện Modular Monolith tích hợp Firebase Authentication và Cloud Firestore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

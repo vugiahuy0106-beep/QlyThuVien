@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Books Collection Rules - Catalog exploration, stock management & borrowing
+    match /books/{bookId} {
+      allow read, write: if true;
+    }
+
+    // Readers Collection Rules - Readers directory & student library cards
+    match /readers/{readerId} {
+      allow read, write: if true;
+    }
+
+    // Loans Collection Rules - Circulation records & self-service borrowing
+    match /loans/{loanId} {
+      allow read, write: if true;
+    }
+
+    // Test connection check rule
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Fallback collection access
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
